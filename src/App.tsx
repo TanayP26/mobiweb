@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import type { Page, NavigateFn } from "./data";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -40,27 +40,37 @@ export default function App() {
   const initialRoute = readRoute();
   const [page, setPage] = useState<Page>(initialRoute.page);
   const [params, setParams] = useState<Record<string, string>>(initialRoute.params);
+  const currentHash = useRef(window.location.hash);
 
   useEffect(() => {
     if (!window.location.hash) {
-      window.history.replaceState(null, "", routeHash(page, params));
+      const route = readRoute();
+      window.history.replaceState(null, "", routeHash(route.page, route.params));
     }
 
+    currentHash.current = window.location.hash;
     const handlePopState = () => {
+      if (window.location.hash === currentHash.current) return;
+      currentHash.current = window.location.hash;
       const route = readRoute();
       setPage(route.page);
       setParams(route.params);
     };
 
     window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, [page, params]);
+    window.addEventListener("hashchange", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("hashchange", handlePopState);
+    };
+  }, []);
 
   const navigate: NavigateFn = useCallback((to, newParams) => {
     const nextParams = newParams ?? {};
     setPage(to);
     setParams(nextParams);
     window.history.pushState(null, "", routeHash(to, nextParams));
+    currentHash.current = window.location.hash;
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 

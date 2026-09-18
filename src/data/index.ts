@@ -19,6 +19,8 @@ export interface Member {
   }
 }
 
+import sarthakPhoto from "../imports/Team/sarthak_vp.jpeg"
+
 export const TEAM: Member[] = [
   {
     id: "Anika-Aggarwal",
@@ -35,26 +37,17 @@ export const TEAM: Member[] = [
     designation: "Vice President",
     category: "office-bearer",
     year: "B.Tech CSE '29",
-    photo: "photo-1494790108377-be9c29b29330",
+    photo: sarthakPhoto,
     socials: { linkedin: "https://www.linkedin.com/in/sarthak-sharma-62655737b", github: "#", instagram: "https://www.instagram.com/sarthak.exe" },
   },
   {
-    id: "Kshitij-Dubey",
-    name: "Kshitij Dubey",
+    id: "Nishant-Mehrotra",
+    name: "Nishant Mehrotra",
     designation: "General Secretary",
     category: "office-bearer",
     year: "B.Tech CSE '29",
     photo: "photo-1500648767791-00dcc994a43e",
-    socials: { linkedin: "#", github: "#" },
-  },
-  {
-    id: "Nishant",
-    name: "Nishant",
-    designation: "Chief Strategist",
-    category: "senior-core",
-    year: "B.Tech CSE '29",
-    photo: "photo-1500648767791-00dcc994a43e",
-    socials: { linkedin: "#", github: "#" },
+    socials: { linkedin: "", github: "" },
   },
   {
     id: "tanay-prasad",

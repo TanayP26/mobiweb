@@ -1,6 +1,6 @@
 import type { NavigateFn, Page } from "../data"
 
-const EXPLORE_LINKS: { label: string page: Page }[] = [
+const EXPLORE_LINKS: { label: string; page: Page }[] = [
   { label: "About", page: "about" },
   { label: "Events", page: "events" },
   { label: "Team", page: "team" },
@@ -116,7 +116,7 @@ export default function Footer({ navigate }: FooterProps) {
           {/* Connect */}
           <div>
             <div className="eyebrow" style={{ marginBottom: 24 }}>
-              Connect
+              <button type="button" aria-label="Connect — Contact" onClick={() => navigate("contact")} style={{ background: "none", border: 0, padding: 0, font: "inherit", color: "inherit", letterSpacing: "inherit", textTransform: "inherit", cursor: "pointer" }}>Connect</button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
@@ -128,7 +128,7 @@ export default function Footer({ navigate }: FooterProps) {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   style={{
                     display: "flex",
                     alignItems: "center",

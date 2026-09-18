@@ -194,7 +194,7 @@ function MemberCard({ member, large }: { member: Member; large?: boolean }) {
         }}
       >
         <img
-          src={`https://images.unsplash.com/${member.photo}?w=400&h=480&fit=crop&auto=format&face`}
+          src={member.photo.startsWith("photo-") ? `https://images.unsplash.com/${member.photo}?w=400&h=480&fit=crop&auto=format&face` : member.photo}
           alt={member.name}
           style={{
             width: "100%",
