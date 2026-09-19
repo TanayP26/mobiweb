@@ -181,6 +181,7 @@ function RegularGrid({ members }: { members: Member[] }) {
 
 function MemberCard({ member, large }: { member: Member; large?: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const [failedPhoto, setFailedPhoto] = useState<string | null>(null);
 
   const imgSize = large ? 320 : 260;
 
@@ -204,9 +205,10 @@ function MemberCard({ member, large }: { member: Member; large?: boolean }) {
           marginBottom: 16,
         }}
       >
-        {member.photo && <img
+        {member.photo && failedPhoto !== member.photo ? <img
           src={member.photo.startsWith("photo-") ? `https://images.unsplash.com/${member.photo}?w=400&h=480&fit=crop&auto=format&face` : member.photo}
           alt={member.name}
+          onError={() => setFailedPhoto(member.photo)}
           style={{
             width: "100%",
             height: "100%",
@@ -216,7 +218,11 @@ function MemberCard({ member, large }: { member: Member; large?: boolean }) {
             filter: hovered ? "brightness(1.08)" : "brightness(0.92)",
             transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), filter 0.35s",
           }}
-        />}
+        /> : (
+          <div aria-hidden="true" style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 40, color: "var(--muted)", opacity: 0.45 }}>
+            {member.name.split(/\s+/).filter(Boolean).map((part) => part[0]).slice(0, 2).join("")}
+          </div>
+        )}
         {/* Socials overlay on hover (desktop) */}
         <div
           style={{
