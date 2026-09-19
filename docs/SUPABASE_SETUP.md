@@ -104,3 +104,83 @@ Removed `.tmp-contact-baseline/`, `.tmp-contact-build/`, `.tmp-contact-tools/` a
 in `supabase/functions/submit-contact/handler_test.ts` are retained (seven passing).
 Existing App/Contact/Footer formatter differences and Vite future-config warnings
 were left unchanged; the contact helper and Edge Function files pass formatting.
+
+## Email notifications
+
+The local function now attempts a Resend notification after a newly inserted row.
+The remote function has not been deployed with this feature. No schema change is
+required. The database remains the source of truth:
+
+- Validation or database failure: existing safe Contact error; no email attempt.
+- New row: attempt one plain-text email, then return `{"success":true}`.
+- Duplicate conflict: return success without another notification.
+- Missing email configuration, Resend rejection, network error or timeout: log a
+  minimal server-side warning/error and return success for the saved message.
+
+The insert uses `return=representation` selecting only `created_at`; an empty
+array identifies an atomic duplicate conflict. Reply-To uses the validated,
+normalized visitor email. From and To come exclusively from server configuration.
+The subject removes control characters; the body is plain text, never HTML.
+Email gets at most five seconds, reduced to keep the handler within a twelve-second
+budget after receipt. This leaves headroom for the unchanged 15-second browser
+request timeout. Network delays outside the handler remain outside this budget.
+
+Delivery is best-effort: no durable queue, retry or delivery-status column is
+introduced. A saved message may have no notification after a provider failure or
+runtime interruption. Duplicate requests do not retry email. The existing minute
+bucket deduplication window is unchanged. Provider acceptance is not proof of inbox
+delivery; monitor the Resend dashboard and review Supabase messages when needed.
+
+### Setup and deployment after review
+
+1. Create a Resend account and API key with sending access.
+2. Add and verify a sending domain in Resend, completing its DNS requirements.
+3. Create a private server-only env file outside the repository, for example
+   `C:\secure\mobilon-contact.env`. Fill these entries (examples/placeholders only):
+
+   ```dotenv
+   RESEND_API_KEY=YOUR_RESEND_API_KEY
+   CONTACT_NOTIFICATION_TO=mobilon.bu@bennett.edu.in,s25cseu1244@bennett.edu.in
+   CONTACT_EMAIL_FROM="MOBiLON Website <contact@YOUR_VERIFIED_DOMAIN>"
+   CONTACT_ALLOWED_ORIGINS=http://localhost:8443,http://127.0.0.1:8443,https://YOUR_PRODUCTION_HOST
+   ```
+
+   `CONTACT_NOTIFICATION_TO` is a comma-separated list of notification recipients.
+   Whitespace is trimmed and empty entries are ignored. Both addresses are sent
+   together in one Resend request; the visitor remains Reply-To only.
+
+   Use a genuinely verified sending domain, not the visitor's address or an
+   unverified Bennett University address. Replace the production origin placeholder
+   and include any real preview origins. Never put these settings in frontend
+   `.env.local`, Vite-prefixed variables, React source or the frontend bundle.
+   For local Edge Function development, use `--env-file` with this separate file.
+
+4. After reviewing the code, run the following from the project root (CLI flags
+   verified with Supabase CLI 2.117.0). These commands have NOT been executed:
+
+   ```powershell
+   npx --yes supabase@2.117.0 login
+   npx --yes supabase@2.117.0 secrets set --project-ref ockzsptkidacudfcfqcl --env-file "C:\secure\mobilon-contact.env"
+   npx --yes supabase@2.117.0 functions deploy submit-contact --project-ref ockzsptkidacudfcfqcl --use-api
+   ```
+
+   Configure `CONTACT_ALLOWED_ORIGINS` before deployment: unlike the currently
+   deployed wildcard-CORS source, this local handler requires explicit origins.
+   JWT verification remains disabled for the public form. Do not run `db push`
+   or repair migration history for this feature.
+
+5. Submit one clearly labelled real Contact message after deployment. Confirm its
+   database row exists, the UI shows MESSAGE RECEIVED, and the notification arrives
+   at the configured mailbox. Verify Reply-To and inspect Resend delivery status.
+   Do not resubmit repeatedly to test failure or duplicates.
+
+Local notification tests use injected fetch stubs and run without network or env
+permissions; no real emails are sent. Run:
+
+```sh
+deno check supabase/functions/submit-contact/index.ts
+deno test supabase/functions/submit-contact/handler_test.ts
+```
+
+References: [Resend send-email API](https://resend.com/docs/api-reference/emails/send-email),
+[Supabase function secrets](https://supabase.com/docs/guides/functions/secrets).

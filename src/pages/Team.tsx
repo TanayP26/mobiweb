@@ -105,6 +105,17 @@ export default function Team({ navigate: _navigate }: TeamProps) {
       >
         {isOfficeBearers ? (
           <OfficeBearersLayout members={members} />
+        ) : active === "junior-core" ? (
+          <div style={{ position: "relative", overflow: "hidden" }}>
+            <div aria-hidden="true" inert style={{ filter: "blur(16px)", pointerEvents: "none", userSelect: "none" }}>
+              <RegularGrid members={members} />
+            </div>
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "clamp(24px, 5vw, 48px)", letterSpacing: "0.08em", color: "#F8FAFC", textAlign: "center", textShadow: "0 2px 16px var(--bg)" }}>
+                COMING SOON
+              </span>
+            </div>
+          </div>
         ) : (
           <RegularGrid members={members} />
         )}
@@ -193,7 +204,7 @@ function MemberCard({ member, large }: { member: Member; large?: boolean }) {
           marginBottom: 16,
         }}
       >
-        <img
+        {member.photo && <img
           src={member.photo.startsWith("photo-") ? `https://images.unsplash.com/${member.photo}?w=400&h=480&fit=crop&auto=format&face` : member.photo}
           alt={member.name}
           style={{
@@ -205,7 +216,7 @@ function MemberCard({ member, large }: { member: Member; large?: boolean }) {
             filter: hovered ? "brightness(1.08)" : "brightness(0.92)",
             transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), filter 0.35s",
           }}
-        />
+        />}
         {/* Socials overlay on hover (desktop) */}
         <div
           style={{

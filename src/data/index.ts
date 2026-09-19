@@ -20,6 +20,18 @@ export interface Member {
 }
 
 import sarthakPhoto from "../imports/Team/sarthak_vp.jpeg"
+import tanayPhoto from "../imports/Team/tanay_cto.jpg"
+import anikaphoto from "../imports/Team/Anika_president.jpg"
+
+import lakshPhoto from "../imports/Team/Laksh_techco-head.jpg"
+import samarthPhoto from "../imports/Team/Samarth_eventhead.jpg"
+import anshikaPhoto from "../imports/Team/Anshika_Eventsubhead.jpg"
+import prakharPhoto from "../imports/Team/Prakhar_operationshead.jpg"
+import kanishkaPhoto from "../imports/Team/Kanishka_multimediasub-head.jpg"
+import darshilPhoto from "../imports/Team/Darshil_multimediahead.png"
+import rushaliPhoto from "../imports/Team/Rushali_prhead.jpeg"
+import sushantPhoto from "../imports/Team/Sushant_Prsubhead.jpg"
+import nandiniPhoto from "../imports/Team/nandini_designsubhead.png"
 
 export const TEAM: Member[] = [
   {
@@ -28,7 +40,7 @@ export const TEAM: Member[] = [
     designation: "Chairperson",
     category: "office-bearer",
     year: "B.Tech CSE '29",
-    photo: "photo-1507003211169-0a1dd7228f2d",
+    photo: anikaphoto,
     socials: { linkedin: "https://www.linkedin.com/in/anika-agarwal-28088537a", github: "#", instagram: "https://www.instagram.com/_being_.uzzz" },
   },
   {
@@ -52,65 +64,107 @@ export const TEAM: Member[] = [
   {
     id: "tanay-prasad",
     name: "Tanay Prasad",
-    designation: "Tech Head",
+    designation: "Technical Head",
     category: "senior-core",
     year: "B.Tech CSE '29",
-    photo: "photo-1472099645785-5658abf4ff4e",
+    photo: tanayPhoto,
     socials: { linkedin: "https://www.linkedin.com/in/tanay-prasad26", github: "https://github.com/TanayP26", instagram: "https://www.instagram.com/TanayP26" },
   },
   {
-    id: "sneha-joshi",
-    name: "Sneha Joshi",
+    id: "laksh-dhingra",
+    name: "Laksh Dhingra",
+    designation: "Technical Sub-Head",
+    category: "senior-core",
+    photo: lakshPhoto,
+    socials: {},
+  },
+  {
+    id: "samarth-pathak",
+    name: "Samarth Pathak",
     designation: "Events Head",
     category: "senior-core",
-    year: "B.Tech CSE '27",
-    photo: "photo-1438761681033-6461ffad8d80",
-    socials: { linkedin: "#", instagram: "#" },
+    photo: samarthPhoto,
+    socials: {},
   },
   {
-    id: "aditya-kumar",
-    name: "Aditya Kumar",
-    designation: "Design Lead",
+    id: "anshika",
+    name: "Anshika",
+    designation: "Events Sub-Head",
     category: "senior-core",
-    year: "B.Tech CSDS '27",
-    photo: "photo-1568602471122-7832951cc4c5",
-    socials: { linkedin: "#", github: "#", portfolio: "#" },
+    photo: anshikaPhoto,
+    socials: {},
   },
   {
-    id: "kavya-nair",
-    name: "Kavya Nair",
-    designation: "AI/ML Lead",
+    id: "prakhar-tiwari",
+    name: "Prakhar Tiwari",
+    designation: "Operations Head",
     category: "senior-core",
-    year: "B.Tech AI '26",
-    photo: "photo-1531746020798-e6953c6e8e04",
-    socials: { linkedin: "#", github: "#" },
+    photo: prakharPhoto,
+    socials: {},
   },
   {
-    id: "rohan-singh",
-    name: "Rohan Singh",
-    designation: "Mobile Lead",
+    id: "darshil",
+    name: "Darshil",
+    designation: "Multimedia Head",
     category: "senior-core",
-    year: "B.Tech CSE '27",
-    photo: "photo-1570295999919-56ceb5ecca61",
-    socials: { linkedin: "#", github: "#" },
+    photo: darshilPhoto,
+    socials: {},
   },
   {
-    id: "ishaan-verma",
-    name: "Ishaan Verma",
-    designation: "Web Lead",
+    id: "kanishka-tandon",
+    name: "Kanishka Tandon",
+    designation: "Multimedia Sub-Head",
     category: "senior-core",
-    year: "B.Tech CSE '27",
-    photo: "photo-1522075469751-3a6694fb2f61",
-    socials: { linkedin: "#", github: "#" },
+    photo: kanishkaPhoto,
+    socials: {},
   },
   {
-    id: "meera-pillai",
-    name: "Meera Pillai",
-    designation: "Community Manager",
+    id: "arsh",
+    name: "Arsh",
+    designation: "Multimedia Sub-Head",
     category: "senior-core",
-    year: "B.Tech CSE '27",
-    photo: "photo-1544723795-3fb6469f5b39",
-    socials: { linkedin: "#", instagram: "#" },
+    photo: "",
+    socials: {},
+  },
+  {
+    id: "sarthak-garg",
+    name: "Sarthak Garg",
+    designation: "Finance Head",
+    category: "senior-core",
+    photo: "",
+    socials: {},
+  },
+  {
+    id: "rushali",
+    name: "Rushali",
+    designation: "PR & Outreach Head",
+    category: "senior-core",
+    photo: rushaliPhoto,
+    socials: {},
+  },
+  {
+    id: "sushant-singh",
+    name: "Sushant Singh",
+    designation: "PR & Outreach Sub-Head",
+    category: "senior-core",
+    photo: sushantPhoto,
+    socials: {},
+  },
+  {
+    id: "tanishk",
+    name: "Tanishk",
+    designation: "Design Head",
+    category: "senior-core",
+    photo: "",
+    socials: {},
+  },
+  {
+    id: "nandini",
+    name: "Nandini",
+    designation: "Design Sub-Head",
+    category: "senior-core",
+    photo: nandiniPhoto,
+    socials: {},
   },
   {
     id: "aarav-patel",
@@ -184,6 +238,7 @@ export const TEAM: Member[] = [
     photo: "photo-1573496359142-b8d87734a5a2",
     socials: { email: "mailto:seema.yadav@bennett.edu.in" },
   },
+
 ]
 
 import flutterAway2Image from "../imports/flutter2.JPG"
@@ -401,7 +456,7 @@ export const PROJECTS: Project[] = [
       "2,400+ active users in semester 1. 87% query resolution rate. Adopted by 3 university departments.",
     techStack: ["Flutter", "FastAPI", "LangChain", "Supabase", "OpenAI"],
     year: "2026",
-    contributors: ["Tanay Prasad", "Rohan Singh", "Kavya Nair", "Aarav Patel"],
+    contributors: [""],
     category: "AI",
     image: "photo-1677442135703-1787eea5ce01",
     featured: true,
@@ -444,7 +499,7 @@ export const PROJECTS: Project[] = [
       "CampusAI lets students upload course PDFs and lecture notes, then ask questions, generate practice tests, and receive concise explanations — all grounded in their own material.",
     techStack: ["Next.js", "Python", "LlamaIndex", "Pinecone", "Vercel"],
     year: "2026",
-    contributors: ["Kavya Nair", "Ananya Rao", "Aditya Kumar"],
+    contributors: [""],
     category: "AI",
     image: "photo-1551650975-87deedd944c3",
     featured: false,
@@ -458,7 +513,7 @@ export const PROJECTS: Project[] = [
       "A lightweight web tool for sharing design mockups, leaving timestamped feedback, and managing design iterations — built specifically for academic project workflows.",
     techStack: ["React", "TypeScript", "Supabase", "Figma API"],
     year: "2026",
-    contributors: ["Aditya Kumar", "Diya Kapoor", "Meera Pillai"],
+    contributors: [""],
     category: "Design",
     image: "photo-1581291518857-4e27b48ff24e",
     featured: false,
@@ -473,7 +528,7 @@ export const PROJECTS: Project[] = [
       "EventFlow handles registrations, check-in, team formation, judging, and results — all in a single platform used to run Mobilon's own events.",
     techStack: ["Flutter", "Firebase", "TypeScript", "Node.js"],
     year: "2026",
-    contributors: ["Sneha Joshi", "Ishaan Verma", "Krish Mehta", "Nikhil Bose"],
+    contributors: [""],
     category: "Mobile",
     image: "photo-1559136555-9303baea8ebd",
     featured: false,

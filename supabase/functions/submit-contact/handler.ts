@@ -24,7 +24,7 @@ const allowedFields = new Set([
   "website",
 ])
 
-interface ContactMessage {
+export interface ContactMessage {
   name: string
   email: string
   organisation: string | null
@@ -34,7 +34,15 @@ interface ContactMessage {
 
 export interface Dependencies {
   allowedOrigins: string[]
-  save: (message: ContactMessage, dedupeKey: string) => Promise<void>
+  save: (
+    message: ContactMessage,
+    dedupeKey: string,
+  ) => Promise<{ createdAt: string } | null>
+  notify?: (
+    message: ContactMessage,
+    createdAt: string,
+    signal: AbortSignal,
+  ) => Promise<void>
   now?: () => number
 }
 
@@ -129,9 +137,11 @@ function validate(body: unknown): ContactMessage {
 export function createHandler({
   allowedOrigins,
   save,
+  notify,
   now = Date.now,
 }: Dependencies) {
   return async (req: Request): Promise<Response> => {
+    const started = performance.now()
     const origin = req.headers.get("origin")
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -175,6 +185,7 @@ export function createHandler({
         VALIDATION_ERROR,
       )
     }
+    let stored: { createdAt: string } | null
     try {
       // Future CAPTCHA / distributed rate-limit checks belong before save().
       // Match the deployed function's content-based, one-minute duplicate key.
@@ -191,12 +202,27 @@ export function createHandler({
       const dedupeKey = [...new Uint8Array(digest)]
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("")
-      await save(message, dedupeKey)
-      return json(200)
+      stored = await save(message, dedupeKey)
     } catch {
       // Never return or log submitted personal information or database errors.
       console.error("submit-contact: storage request failed")
       return json(503, SERVICE_ERROR)
     }
+    if (stored && notify) {
+      // Keep the whole request below the browser's 15-second timeout. A slow
+      // database must not leave a full email timeout on the critical path.
+      const remaining = Math.floor(12000 - (performance.now() - started))
+      try {
+        if (remaining <= 0) throw new Error("Notification budget exhausted")
+        await notify(
+          message,
+          stored.createdAt,
+          AbortSignal.timeout(Math.min(5000, remaining)),
+        )
+      } catch {
+        console.error("submit-contact: notification failed; message saved")
+      }
+    }
+    return json(200)
   }
 }
