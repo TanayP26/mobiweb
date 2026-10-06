@@ -65,7 +65,7 @@ export const TEAM: Member[] = [
   {
     id: "tanay-prasad",
     name: "Tanay Prasad",
-    designation: "Tech Head",
+    designation: "Chief Technology Officer",
     category: "senior-core",
     year: "B.Tech CSE '29",
     photo: tanayPhoto,
@@ -74,7 +74,7 @@ export const TEAM: Member[] = [
   {
     id: "laksh-dhingra",
     name: "Laksh Dhingra",
-    designation: "Tech Sub-Head",
+    designation: "Deputy Technology Head",
     category: "senior-core",
     year: "B.Tech CSE '29",
     photo: lakshPhoto,
@@ -105,6 +105,15 @@ export const TEAM: Member[] = [
     category: "senior-core",
     year: "B.Tech CSE '29",
     photo: prakharPhoto,
+    socials: {},
+  },
+  {
+    id: "dev-thakur",
+    name: "Dev Thakur",
+    designation: "Operations Sub-Head",
+    category: "senior-core",
+    year: "B.Tech CSE '29",
+    photo: "",
     socials: {},
   },
   {
@@ -153,11 +162,20 @@ export const TEAM: Member[] = [
     socials: {},
   },
   {
+    id: "Manvendra-Singh-Shaktawat",
+    name: "Manvendra Singh Shaktawat",
+    designation: "PR & Outreach Sub-Head",
+    category: "senior-core",
+    year: "B.Tech CSE '29",
+    photo: "",
+    socials: {},
+  },
+  {
     id: "sushant-singh",
     name: "Sushant Singh",
     designation: "PR & Outreach Sub-Head",
     category: "senior-core",
-    year: "BBA '29",
+    year: "BBA '28",
     photo: sushantPhoto,
     socials: {},
   },
@@ -179,6 +197,7 @@ export const TEAM: Member[] = [
     photo: nandiniPhoto,
     socials: {},
   },
+  
   {
     id: "aarav-patel",
     name: "Aarav Patel",
